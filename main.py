@@ -48,6 +48,7 @@ lr_scheduler_D_zh = lr_scheduler.LambdaLR(optimizer_D_zh, lr_lambda = LambdaLR(o
 
 def train():
     for epoch in range(opt.n_epochs):
+        print('=== Starting epoch:', epoch, '===')
         lr_scheduler_G.step()
         lr_scheduler_D_en.step()
         lr_scheduler_D_zh.step()
@@ -93,8 +94,8 @@ def train():
 
             loss_D_zh = criterion_GAN(pred_real_zh, torch.ones_like(pred_real_zh)) + criterion_GAN(pred_fake_zh, torch.zeros_like(pred_fake_zh))
             loss_D_en = criterion_GAN(pred_real_en, torch.ones_like(pred_real_en)) + criterion_GAN(pred_fake_en, torch.zeros_like(pred_fake_en))
-            loss_D_zh = 0.5 * loss_D_zh
-            loss_D_en = 0.5 * loss_D_en
+            loss_D_zh = 0.3 * loss_D_zh
+            loss_D_en = 0.3 * loss_D_en
 
             optimizer_D_zh.zero_grad()
             loss_D_zh.backward()
@@ -103,10 +104,12 @@ def train():
             optimizer_D_en.zero_grad()
             loss_D_en.backward()
             optimizer_D_en.step()
-
-            print('Loss_G is', loss_G.item())
-            print('Loss_D_en is', loss_D_en.item())
-            print('Loss_D_zh is', loss_D_zh.item())
+            
+            if index % 100 == 0:
+                print('\nIndex:', index)
+                print('\tLoss_G is', loss_G.item())
+                print('\tLoss_D_en is', loss_D_en.item())
+                print('\tLoss_D_zh is', loss_D_zh.item())
 
         if epoch % opt.save_every == 0:
             torch.save(netG_en2zh.state_dict(), os.path.join(WEIGHTS_DIR, 'netG_en2zh_epoch{}.pth'.format(epoch)))
