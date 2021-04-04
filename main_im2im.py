@@ -65,8 +65,8 @@ def train():
 
             loss_D_zh = criterion_GAN(pred_real_zh, torch.ones_like(pred_real_zh)) + criterion_GAN(pred_fake_zh, torch.zeros_like(pred_fake_zh))
             loss_D_en = criterion_GAN(pred_real_en, torch.ones_like(pred_real_en)) + criterion_GAN(pred_fake_en, torch.zeros_like(pred_fake_en))
-            loss_D_zh = 0.3 * loss_D_zh
-            loss_D_en = 0.3 * loss_D_en
+            loss_D_zh = 0.5 * loss_D_zh
+            loss_D_en = 0.5 * loss_D_en
 
             optimizer_D_zh.zero_grad()
             loss_D_zh.backward()
@@ -76,7 +76,7 @@ def train():
             loss_D_en.backward()
             optimizer_D_en.step()
             
-            if index % 1 == 0:
+            if index % 10 == 0:
                 print('\nIndex:', index)
                 print('\tLoss_G is', loss_G.item())
                 print('\tLoss_D_A is', loss_D_en.item())
@@ -91,7 +91,7 @@ def train():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--n_epochs', type=int, default=50)
-    parser.add_argument('--batch_size', type=int, default=16)
+    parser.add_argument('--batch_size', type=int, default=8)
     parser.add_argument('--lr', type=float, default=2e-4)
     parser.add_argument('--save_every', type=int, default=5)
     parser.add_argument('--dirA', required=True)
