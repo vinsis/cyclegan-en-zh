@@ -19,7 +19,7 @@ class ImagePairDataset(Dataset):
         self.imagesB = glob.glob(os.path.join(dirB, '*.jpg'))
         print('Length of image sets A and B:', len(self.imagesA), len(self.imagesB))
         self.transform = transform
-        self.SIZE = (200,200)
+        self.SIZE = (100,100)
 
     def __len__(self):
         return max(len(self.imagesA), len(self.imagesB))
