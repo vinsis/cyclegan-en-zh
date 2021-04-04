@@ -8,9 +8,11 @@ from torchvision import transforms
 CWD = os.path.dirname(__file__)
 
 transform = transforms.Compose([
+                transforms.Resize(120, Image.BICUBIC),
+                transforms.RandomCrop(100),
                 transforms.RandomHorizontalFlip(),
-                transforms.ColorJitter(0.2,0.2,0.2),
-                transforms.ToTensor()
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))
             ])
 
 class ImagePairDataset(Dataset):
