@@ -102,7 +102,7 @@ if __name__ == '__main__':
     DECAY_EPOCH = opt.n_epochs // 2
 
     dataset = ImagePairDataset(opt.dirA, opt.dirB)
-    dataloader = DataLoader(dataset, batch_size=opt.batch_size, shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=opt.batch_size, shuffle=True, num_workers=4)
 
     netG_A2B = Generator(3,3).to(device)
     netG_B2A = Generator(3,3).to(device)
