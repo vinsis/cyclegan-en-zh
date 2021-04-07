@@ -16,7 +16,7 @@ print('Using device:', device)
 WEIGHTS_DIR = os.path.join(CWD, 'weights')
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_epochs', type=int, default=200)
+parser.add_argument('--n_epochs', type=int, default=10)
 parser.add_argument('--batch_size', type=int, default=1)
 parser.add_argument('--lr', type=float, default=2e-4)
 parser.add_argument('--save_every', type=int, default=10)
@@ -25,7 +25,7 @@ opt = parser.parse_args()
 BETAS = (0.5, 0.999)
 DECAY_EPOCH = opt.n_epochs // 2
 
-dataloader = DataLoader(dataset, batch_size=opt.batch_size, shuffle=False)
+dataloader = DataLoader(dataset, batch_size=opt.batch_size, shuffle=False, num_workers=4)
 
 netG_en2zh = Generator(3,3).to(device)
 netG_zh2en = Generator(3,3).to(device)
@@ -94,8 +94,8 @@ def train():
 
             loss_D_zh = criterion_GAN(pred_real_zh, torch.ones_like(pred_real_zh)) + criterion_GAN(pred_fake_zh, torch.zeros_like(pred_fake_zh))
             loss_D_en = criterion_GAN(pred_real_en, torch.ones_like(pred_real_en)) + criterion_GAN(pred_fake_en, torch.zeros_like(pred_fake_en))
-            loss_D_zh = 0.3 * loss_D_zh
-            loss_D_en = 0.3 * loss_D_en
+            loss_D_zh = 0.5 * loss_D_zh
+            loss_D_en = 0.5 * loss_D_en
 
             optimizer_D_zh.zero_grad()
             loss_D_zh.backward()

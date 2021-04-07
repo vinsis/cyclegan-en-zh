@@ -10,6 +10,7 @@ EN_SET = EN_SET + ''.join([letter.upper() for letter in EN_SET])
 EN_SET = list(EN_SET)
 
 ZH_SET = [chr(i) for i in range(20000, 40000)]
+ZH_SET = [chr(i) for i in range(12449, 12538)] # katakana
 
 CWD = os.path.dirname(__file__)
 
