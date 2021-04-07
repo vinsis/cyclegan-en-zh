@@ -18,8 +18,8 @@ FONT_LIST = glob.glob(os.path.join(CWD, 'fonts', '*.ttf'))
 ZH_FONTS = [font for font in FONT_LIST if 'unicode' in font.lower()]
 
 transform = transforms.Compose([
-                transforms.RandomHorizontalFlip(),
-                transforms.ToTensor()
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))
             ])
 
 def get_random_char(char_set, font_list, size=(100,100)):
@@ -28,7 +28,8 @@ def get_random_char(char_set, font_list, size=(100,100)):
 
     result = Image.new(size=size, mode='RGB', color=bg_color)
     
-    text = np.random.choice(char_set)
+    text = np.random.choice(char_set, size=np.random.choice([1,2,3]))
+    text = ''.join(text)
     text_color = tuple([np.random.randint(150,256) for _ in range(3)])
     font = ImageFont.truetype(np.random.choice(font_list), np.random.randint(W//2, 2*W//3))
     location = (np.random.randint(0,W//3), np.random.randint(0,H//3))

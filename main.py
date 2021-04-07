@@ -16,10 +16,10 @@ print('Using device:', device)
 WEIGHTS_DIR = os.path.join(CWD, 'weights')
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_epochs', type=int, default=10)
-parser.add_argument('--batch_size', type=int, default=1)
+parser.add_argument('--n_epochs', type=int, default=20)
+parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--lr', type=float, default=2e-4)
-parser.add_argument('--save_every', type=int, default=10)
+parser.add_argument('--save_every', type=int, default=1)
 opt = parser.parse_args()
 
 BETAS = (0.5, 0.999)
@@ -94,8 +94,8 @@ def train():
 
             loss_D_zh = criterion_GAN(pred_real_zh, torch.ones_like(pred_real_zh)) + criterion_GAN(pred_fake_zh, torch.zeros_like(pred_fake_zh))
             loss_D_en = criterion_GAN(pred_real_en, torch.ones_like(pred_real_en)) + criterion_GAN(pred_fake_en, torch.zeros_like(pred_fake_en))
-            loss_D_zh = 0.5 * loss_D_zh
-            loss_D_en = 0.5 * loss_D_en
+            loss_D_zh = 0.3 * loss_D_zh
+            loss_D_en = 0.3 * loss_D_en
 
             optimizer_D_zh.zero_grad()
             loss_D_zh.backward()
@@ -112,10 +112,10 @@ def train():
                 print('\tLoss_D_zh is', loss_D_zh.item())
 
         if epoch % opt.save_every == 0:
-            torch.save(netG_en2zh.state_dict(), os.path.join(WEIGHTS_DIR, 'netG_en2zh_epoch{}.pth'.format(epoch)))
-            torch.save(netG_zh2en.state_dict(), os.path.join(WEIGHTS_DIR, 'netG_zh2en_epoch{}.pth'.format(epoch)))
+            torch.save(netG_en2zh.state_dict(), os.path.join(WEIGHTS_DIR, 'netG_en2jp_epoch{}.pth'.format(epoch)))
+            torch.save(netG_zh2en.state_dict(), os.path.join(WEIGHTS_DIR, 'netG_jp2en_epoch{}.pth'.format(epoch)))
             torch.save(netD_en.state_dict(), os.path.join(WEIGHTS_DIR, 'netD_en_epoch{}.pth'.format(epoch)))
-            torch.save(netD_zh.state_dict(), os.path.join(WEIGHTS_DIR, 'netD_zh_epoch{}.pth'.format(epoch)))
+            torch.save(netD_zh.state_dict(), os.path.join(WEIGHTS_DIR, 'netD_jp_epoch{}.pth'.format(epoch)))
 
 if __name__ == '__main__':
     train()
