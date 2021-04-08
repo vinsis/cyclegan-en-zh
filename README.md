@@ -17,6 +17,6 @@ More results can be seen [here](https://github.com/vinsis/cyclegan-en-zh/tree/ma
 For both these datasets, I got the best results when [discrinimator weights](https://github.com/vinsis/cyclegan-en-zh/blob/main/main.py#L97-L98) were set to `0.1` (currently set to `0.3` in the code) and batch size was increased to 16. I couldn't go higher with the batch size due to memory issues but it's worth trying. 
 
 ## Other points
-- Comment out [this line] to train on Mandarin characters.
+- Comment out [this line](https://github.com/vinsis/cyclegan-en-zh/blob/main/data.py#L13) to train on Mandarin characters.
 - I also tried training on two image sets: real images and stickers. The files named `*im2im.py` contain the code for it. 
 - You can run `python main.py` for training on character sets or `python main_im2im.py --/path/to/images1 --/path/to/images2` for training on image sets.
