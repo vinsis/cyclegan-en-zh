@@ -9,6 +9,9 @@ A lot of code was taken from [aitorzip/PyTorch-CycleGAN](https://github.com/aito
 ## Samples for English character to Mandarin character mapping (after 10 epochs)
 ![](https://github.com/vinsis/cyclegan-en-zh/blob/main/results/en2zh_cropped.jpg)
 
+## Samples for real image to sticker mapping (after 80 epochs)
+![](https://github.com/vinsis/cyclegan-en-zh/blob/main/results/im2im_cropped.jpg)
+
 More results can be seen [here](https://github.com/vinsis/cyclegan-en-zh/tree/main/results).
 
 For both these datasets, I got the best results when [discrinimator weights](https://github.com/vinsis/cyclegan-en-zh/blob/main/main.py#L97-L98) were set to `0.1` (currently set to `0.3` in the code) and batch size was increased to 16. I couldn't go higher with the batch size due to memory issues but it's worth trying. 
